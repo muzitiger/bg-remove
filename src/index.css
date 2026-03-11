@@ -2,16 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-.bg-checkered {
-  background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
-    linear-gradient(-45deg, #808080 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #808080 75%),
-    linear-gradient(-45deg, transparent 75%, #808080 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  background-color: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  *, *::before, *::after {
+    transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(124, 108, 255, 0.3);
+    color: #fff;
+  }
 }
 
+/* Checkered transparent background for processed images */
+.bg-checkered {
+  background-image:
+    linear-gradient(45deg, #2a2a38 25%, transparent 25%),
+    linear-gradient(-45deg, #2a2a38 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #2a2a38 75%),
+    linear-gradient(-45deg, transparent 75%, #2a2a38 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  background-color: #1a1a24;
+}
+
+/* Slider styles */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  height: 4px;
+  border-radius: 9999px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #7c6cff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(124, 108, 255, 0.2);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 6px rgba(124, 108, 255, 0.3);
+  transform: scale(1.1);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(0.95);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #7c6cff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(124, 108, 255, 0.2);
+  border: none;
+}
+
+/* Color picker */
+input[type="color"] {
+  -webkit-appearance: none;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+input[type="color"]:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Mask animation (preserved) */
 .mask {
   mask-image: linear-gradient(to right, black 0%, black 100%);
   mask-size: 100%;
@@ -28,58 +133,7 @@
 .mask.processing {
   mask-size: 0%;
   transition-delay: 0s;
-  border: 2px solid red;
-}
-
-body {
-  background: linear-gradient(135deg, #5200ae, #4062bb);
-}
-
-/* Slider styles */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: #808080;
-  height: 4px;
-  border-radius: 2px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: none;
-}
-
-/* Color picker styles */
-input[type="color"] {
-  -webkit-appearance: none;
-  /* border: none; */
-  padding: 0;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch {
-  border: none;
+  border: 2px solid #f87171;
 }
 
 /* Image container styles */

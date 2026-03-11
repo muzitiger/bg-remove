@@ -166,31 +166,32 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">Edit Image</h2>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="bg-surface-1 rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-modal border border-border animate-scale-in">
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-lg font-semibold text-on-surface">Edit Image</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-faint hover:text-on-surface hover:bg-surface-3 active:scale-[0.92]"
           >
             ✕
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-5">
+            {/* Background section */}
             <div>
-              <h3 className="font-medium text-gray-700 mb-2">Background</h3>
-              <div className="flex gap-2 mb-4">
+              <h3 className="text-sm font-medium text-on-surface-dim mb-2.5">Background</h3>
+              <div className="flex gap-1.5 mb-4">
                 {backgroundOptions.map(option => (
                   <button
                     key={option.id}
                     onClick={() => setBgType(option.id)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.96] ${
                       bgType === option.id
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'bg-accent text-white shadow-sm'
+                        : 'bg-surface-3 text-on-surface-dim hover:text-on-surface hover:bg-surface-4'
                     }`}
                   >
                     {option.label}
@@ -200,12 +201,14 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
 
               {bgType === 'color' && (
                 <div>
-                  <div className="flex gap-2 mb-2">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {predefinedColors.map(color => (
                       <button
                         key={color}
                         onClick={() => setBgColor(color)}
-                        className="w-8 h-8 rounded-full border border-gray-300"
+                        className={`w-7 h-7 rounded-full border-2 hover:scale-110 active:scale-95 ${
+                          bgColor === color ? 'border-accent ring-2 ring-accent-ring' : 'border-border'
+                        }`}
                         style={{ backgroundColor: color }}
                       />
                     ))}
@@ -213,7 +216,7 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
                   <div className="flex items-center gap-2 mt-3">
                     <button
                       onClick={() => setShowCustomColorPicker(!showCustomColorPicker)}
-                      className="px-3 py-1.5 bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-700"
+                      className="px-3 py-1.5 bg-surface-3 rounded-lg hover:bg-surface-4 text-sm text-on-surface-dim hover:text-on-surface active:scale-[0.96]"
                     >
                       Custom Color
                     </button>
@@ -222,7 +225,7 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
                         type="color"
                         value={bgColor}
                         onChange={(e) => setBgColor(e.target.value)}
-                        className="w-8 h-8 border border-gray-400 rounded-md hover:bg-blue-200"
+                        className="w-8 h-8 rounded-lg"
                       />
                     )}
                   </div>
@@ -234,22 +237,23 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
                   type="file"
                   accept="image/*"
                   onChange={(e) => setCustomBgImage(e.target.files?.[0] || null)}
-                  className="w-full"
+                  className="w-full text-sm text-on-surface-dim file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-surface-3 file:text-on-surface-dim hover:file:bg-surface-4 file:cursor-pointer"
                 />
               )}
             </div>
 
+            {/* Effects section */}
             <div>
-              <h3 className="font-medium text-gray-700 mb-2">Effects</h3>
-              <div className="flex gap-2 mb-4">
+              <h3 className="text-sm font-medium text-on-surface-dim mb-2.5">Effects</h3>
+              <div className="flex flex-wrap gap-1.5 mb-4">
                 {effectOptions.map(option => (
                   <button
                     key={option.id}
                     onClick={() => setSelectedEffect(option.id)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-[0.96] ${
                       selectedEffect === option.id
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'bg-accent text-white shadow-sm'
+                        : 'bg-surface-3 text-on-surface-dim hover:text-on-surface hover:bg-surface-4'
                     }`}
                   >
                     {option.label}
@@ -267,9 +271,9 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
                     onChange={(e) => handleEffectValueChange(Number(e.target.value))}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-sm text-gray-500">
+                  <div className="flex justify-between text-xs text-on-surface-faint mt-1">
                     <span>0</span>
-                    <span>{getCurrentEffectValue()}</span>
+                    <span className="text-accent font-medium">{getCurrentEffectValue()}</span>
                     <span>100</span>
                   </div>
                 </div>
@@ -277,9 +281,10 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
             </div>
           </div>
 
+          {/* Preview */}
           <div>
-            <h3 className="font-medium text-gray-700 mb-2">Preview</h3>
-            <div className="border rounded-lg overflow-hidden">
+            <h3 className="text-sm font-medium text-on-surface-dim mb-2.5">Preview</h3>
+            <div className="border border-border rounded-xl overflow-hidden bg-surface-2">
               <img
                 src={exportUrl || processedURL}
                 alt="Preview"
@@ -289,16 +294,17 @@ export function EditModal({ image, isOpen, onClose, onSave }: EditModalProps) {
           </div>
         </div>
 
+        {/* Actions */}
         <div className="mt-6 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
+            className="px-4 py-2 text-sm font-medium text-on-surface-dim bg-surface-3 rounded-xl hover:bg-surface-4 hover:text-on-surface active:scale-[0.97]"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="px-4 py-2 text-sm font-medium text-white bg-accent rounded-xl hover:bg-accent-hover active:scale-[0.97] shadow-sm"
           >
             Save Changes
           </button>
